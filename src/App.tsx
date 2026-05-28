@@ -50,11 +50,28 @@ const randomSparkData = Array.from({ length: 12 }, (_, index) => ({
   delay: `${Math.random() * 3}s`
 }));
 
+import starGif from './easterEggImages/star.gif';
+import lightsaberGif from './easterEggImages/lightsaber.gif';
+import moonwalkGif from './easterEggImages/moonwalk.gif';
+import magicGif from './easterEggImages/magic.gif';
+import musicGif from './easterEggImages/music.gif';
+
+const STORAGE_KEY = 'site-encontro-nao-count';
+
+const easterEggImages = {
+  star: starGif,
+  lightsaber: lightsaberGif,
+  moonwalk: moonwalkGif,
+  magic: magicGif,
+  music: musicGif
+};
+
 function App() {
   const [screen, setScreen] = useState(1);
   const [noCount, setNoCount] = useState(0);
   const [noPos, setNoPos] = useState({ x: '60%', y: '68%' });
   const [showNoModal, setShowNoModal] = useState(false);
+  const [noPopupShown, setNoPopupShown] = useState(false);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('20:30');
   const [location, setLocation] = useState('cine');
@@ -73,6 +90,11 @@ function App() {
   } | null>(null);
 
   useEffect(() => {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const parsed = stored ? Number.parseInt(stored, 10) : 0;
+    if (!Number.isNaN(parsed) && parsed > 0) {
+      setNoCount(parsed);
+    }
     return () => {
       if (audioRef.current) {
         audioRef.current.osc.stop();
@@ -128,24 +150,26 @@ function App() {
     setAudioActive(true);
   };
 
-  const handleNoMouse = () => {
+  const handleNoMove = () => {
     if (moveCooldown.current) return;
     moveCooldown.current = true;
     setNoCount((current) => {
       const nextCount = current + 1;
-      if (nextCount >= 4) {
+      window.localStorage.setItem(STORAGE_KEY, nextCount.toString());
+      if (nextCount >= 4 && !noPopupShown) {
         setShowNoModal(true);
+        setNoPopupShown(true);
       }
       return nextCount;
     });
 
     setNoPos({
-      x: `${clamp(Math.random() * 72 + 12, 12, 82)}%`,
-      y: `${clamp(Math.random() * 60 + 22, 22, 78)}%`
+      x: `${clamp(Math.random() * 76 + 10, 10, 86)}%`,
+      y: `${clamp(Math.random() * 76 + 10, 10, 86)}%`
     });
     window.setTimeout(() => {
       moveCooldown.current = false;
-    }, 350);
+    }, 250);
   };
 
   const handleYesClick = () => {
@@ -160,6 +184,8 @@ function App() {
     setScreen(1);
     setNoCount(0);
     setShowNoModal(false);
+    setNoPopupShown(false);
+    window.localStorage.removeItem(STORAGE_KEY);
     setDate('');
     setTime('20:30');
     setLocation('cine');
@@ -236,7 +262,7 @@ function App() {
                 const by = btnRect.top - rect.top + btnRect.height / 2;
                 const dist = Math.hypot(mx - bx, my - by);
                 if (dist < 110) {
-                  handleNoMouse();
+                  handleNoMove();
                 }
               }}
             >
@@ -268,36 +294,59 @@ function App() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.96 }}
+                  animate={{ left: noPos.x, top: noPos.y }}
+                  transition={{ type: 'spring', stiffness: 140, damping: 16 }}
                   ref={buttonRef}
+                  onClick={handleNoMove}
+                  className="glow-btn absolute z-10 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
                   style={{ left: noPos.x, top: noPos.y }}
-                  className="glow-btn absolute z-10 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95 sm:static"
                 >
                   NÃO
                 </motion.button>
               </div>
 
-              <div className="grid w-full grid-cols-2 gap-4 pt-8 text-left text-xs text-slate-400 sm:grid-cols-4">
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="font-semibold text-white">estrela interestelar</p>
-                  <p>pequena luz no convite.</p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="font-semibold text-white">sabre neon</p>
-                  <p>um laser brilhando discretamente.</p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="font-semibold text-white">magia Black Clover</p>
-                  <p>centelhas leves por todo o cenário.</p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="font-semibold text-white">moonwalk suave</p>
-                  <p>um passo escondido entre as estrelas.</p>
-                </div>
+              <div className="mt-6 max-w-xl text-center text-sm leading-6 text-slate-300 sm:text-base">
+                um convite com espaço, neon suave e um toque de mistério.
               </div>
 
               <div className="pointer-events-none absolute right-6 top-24 hidden h-28 w-1 bg-gradient-to-b from-fuchsia-400 to-transparent blur-sm sm:block" />
               <div className="pointer-events-none absolute left-10 bottom-24 h-24 w-24 rounded-full bg-cyan-300/10 blur-2xl" />
               <div className="pointer-events-none absolute right-1/3 bottom-10 h-16 w-16 rounded-full bg-violet-500/10 blur-2xl" />
+              {easterEggImages.star && (
+                <img
+                  src={easterEggImages.star}
+                  alt="estrela interestelar"
+                  className="pointer-events-none absolute left-8 top-16 h-12 w-12 animate-pulse opacity-90"
+                />
+              )}
+              {easterEggImages.lightsaber && (
+                <img
+                  src={easterEggImages.lightsaber}
+                  alt="sabre de luz"
+                  className="pointer-events-none absolute right-8 top-16 h-16 w-6 opacity-90"
+                />
+              )}
+              {easterEggImages.moonwalk && (
+                <img
+                  src={easterEggImages.moonwalk}
+                  alt="moonwalk"
+                  className="pointer-events-none absolute left-4 bottom-32 h-16 w-16 opacity-90"
+                />
+              )}
+              {easterEggImages.magic && (
+                <img
+                  src={easterEggImages.magic}
+                  alt="magia"
+                  className="pointer-events-none absolute right-14 bottom-32 h-14 w-14 opacity-90"
+                />
+              )}
+              {easterEggImages.music && (
+                <img
+                  src={easterEggImages.music}
+                  alt="nota musical neon"
+                  className="pointer-events-none absolute left-1/2 top-10 h-12 w-12 -translate-x-1/2 opacity-90"
+                />
+              )}
             </motion.section>
           )}
 
