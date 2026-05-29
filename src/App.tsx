@@ -81,6 +81,7 @@ function App() {
   const [isScrolling, setIsScrolling] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const yesButtonRef = useRef<HTMLButtonElement | null>(null);
   const moveCooldown = useRef(false);
   const audioRef = useRef<{
     context: AudioContext;
@@ -163,9 +164,69 @@ function App() {
       return nextCount;
     });
 
+    const container = containerRef.current;
+    const noButton = buttonRef.current;
+    const yesButton = yesButtonRef.current;
+
+    if (!container || !noButton) {
+      setNoPos({
+        x: `${clamp(Math.random() * 90 + 5, 5, 95)}%`,
+        y: `${clamp(Math.random() * 90 + 5, 5, 95)}%`
+      });
+      window.setTimeout(() => {
+        moveCooldown.current = false;
+      }, 180);
+      return;
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    const noRect = noButton.getBoundingClientRect();
+    const yesRect = yesButton?.getBoundingClientRect();
+
+    const padding = 18;
+    const minX = padding;
+    const minY = padding;
+    const maxX = Math.max(containerRect.width - noRect.width - padding, minX);
+    const maxY = Math.max(containerRect.height - noRect.height - padding, minY);
+
+    const yesBounds = yesRect
+      ? {
+          left: yesRect.left - containerRect.left,
+          top: yesRect.top - containerRect.top,
+          right: yesRect.right - containerRect.left,
+          bottom: yesRect.bottom - containerRect.top
+        }
+      : null;
+
+    const intersectsYes = (x: number, y: number) => {
+      if (!yesBounds) return false;
+      const candidate = {
+        left: x,
+        top: y,
+        right: x + noRect.width,
+        bottom: y + noRect.height
+      };
+      return !(
+        candidate.right < yesBounds.left ||
+        candidate.left > yesBounds.right ||
+        candidate.bottom < yesBounds.top ||
+        candidate.top > yesBounds.bottom
+      );
+    };
+
+    let nextLeft = minX;
+    let nextTop = minY;
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      nextLeft = minX + Math.random() * (maxX - minX);
+      nextTop = minY + Math.random() * (maxY - minY);
+      if (!intersectsYes(nextLeft, nextTop)) {
+        break;
+      }
+    }
+
     setNoPos({
-      x: `${clamp(Math.random() * 90 + 5, 5, 95)}%`,
-      y: `${clamp(Math.random() * 90 + 5, 5, 95)}%`
+      x: `${Math.round((nextLeft / containerRect.width) * 100)}%`,
+      y: `${Math.round((nextTop / containerRect.height) * 100)}%`
     });
     window.setTimeout(() => {
       moveCooldown.current = false;
@@ -282,24 +343,25 @@ function App() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleYesClick}
+                  ref={yesButtonRef}
                   className="glow-btn z-10 bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
                 >
                   SIM
                 </motion.button>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
-                  animate={{ left: noPos.x, top: noPos.y }}
-                  transition={{ type: 'spring', stiffness: 140, damping: 16 }}
-                  ref={buttonRef}
-                  onClick={handleNoMove}
-                  className="glow-btn absolute z-20 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
-                  style={{ left: noPos.x, top: noPos.y }}
-                >
-                  NÃO
-                </motion.button>
               </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
+                animate={{ left: noPos.x, top: noPos.y }}
+                transition={{ type: 'spring', stiffness: 140, damping: 16 }}
+                ref={buttonRef}
+                onClick={handleNoMove}
+                className="glow-btn absolute z-20 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
+                style={{ left: noPos.x, top: noPos.y }}
+              >
+                NÃO
+              </motion.button>
 
               <div className="pointer-events-none absolute right-6 top-24 hidden h-28 w-1 bg-gradient-to-b from-fuchsia-400 to-transparent blur-sm sm:block" />
               <div className="pointer-events-none absolute left-10 bottom-24 h-24 w-24 rounded-full bg-cyan-300/10 blur-2xl" />
