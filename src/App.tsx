@@ -12,25 +12,25 @@ const locationOptions: LocationOption[] = [
   {
     id: 'cine',
     title: 'Cine Drive-In',
-    subtitle: 'assistir algo sob as estrelas',
+    subtitle: 'literalmente pra assistir o mandaloriano e o Grogu',
     theme: 'space'
   },
   {
     id: 'parque',
     title: 'Parque tranquilo',
-    subtitle: 'um passeio leve e mágico',
+    subtitle: 'Um parque muito daóra que 99% de certeza que você nao conhece aqui em bsb',
     theme: 'park'
   },
   {
     id: 'surpresa',
     title: 'SURPRESA!',
-    subtitle: 'o destino misterioso',
+    subtitle: 'Aqui é caixa misteriosa e eu escolho onde vai ser!!',
     theme: 'surprise'
   },
   {
     id: 'outra',
     title: 'Algo que você queira',
-    subtitle: 'me conte a sua ideia',
+    subtitle: 'outra coisia que voce queira',
     theme: 'custom'
   }
 ];
@@ -164,12 +164,12 @@ function App() {
     });
 
     setNoPos({
-      x: `${clamp(Math.random() * 76 + 10, 10, 86)}%`,
-      y: `${clamp(Math.random() * 76 + 10, 10, 86)}%`
+      x: `${clamp(Math.random() * 84 + 7, 7, 88)}%`,
+      y: `${clamp(Math.random() * 80 + 7, 7, 87)}%`
     });
     window.setTimeout(() => {
       moveCooldown.current = false;
-    }, 250);
+    }, 240);
   };
 
   const handleYesClick = () => {
@@ -261,7 +261,7 @@ function App() {
                 const bx = btnRect.left - rect.left + btnRect.width / 2;
                 const by = btnRect.top - rect.top + btnRect.height / 2;
                 const dist = Math.hypot(mx - bx, my - by);
-                if (dist < 110) {
+                if (dist < 60) {
                   handleNoMove();
                 }
               }}
@@ -272,13 +272,9 @@ function App() {
               </div>
 
               <div className="flex flex-col items-center gap-4 text-center">
-                <p className="text-sm uppercase tracking-[0.4em] text-cyan-200/60">uma aventura pensada com carinho</p>
                 <h1 className="max-w-3xl text-[clamp(2.75rem,5vw,5.5rem)] leading-[0.95] text-white drop-shadow-[0_0_20px_rgba(128,216,255,0.32)]">
                   Você aceita sair comigo??
                 </h1>
-                <p className="max-w-2xl text-sm text-slate-300 sm:text-base">
-                  um convite com magia, neon, estrelas e um pouquinho de drama cinematográfico.
-                </p>
               </div>
 
               <div className="relative flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
@@ -303,10 +299,6 @@ function App() {
                 >
                   NÃO
                 </motion.button>
-              </div>
-
-              <div className="mt-6 max-w-xl text-center text-sm leading-6 text-slate-300 sm:text-base">
-                um convite com espaço, neon suave e um toque de mistério.
               </div>
 
               <div className="pointer-events-none absolute right-6 top-24 hidden h-28 w-1 bg-gradient-to-b from-fuchsia-400 to-transparent blur-sm sm:block" />
@@ -355,10 +347,7 @@ function App() {
               <div className="space-y-3 text-center">
                 <p className="text-sm uppercase tracking-[0.35em] text-cyan-200/70">nenhuma chance de não responder</p>
                 <h2 className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">NO WAY</h2>
-                <p className="text-3xl font-medium text-slate-100">NO WAY SÉRIO???</p>
-                <p className="mx-auto max-w-2xl text-slate-300 sm:text-lg">
-                  vamos ver pra onde vamos com toda essa energia cósmica.
-                </p>
+                <p className="text-3xl font-medium text-slate-100">NO WAY, SÉRIO???</p>
               </div>
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-glow">
@@ -381,10 +370,6 @@ function App() {
                 </div>
               </div>
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-                <div className="rounded-3xl border border-white/10 bg-white/5 px-5 py-4 text-left text-slate-300 shadow-glow">
-                  <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">anote</p>
-                  <p className="mt-2 text-lg text-white">a escolha ainda está só na sua mão.</p>
-                </div>
                 <button
                   onClick={() => setScreen(3)}
                   className="glow-btn min-w-[170px] bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
@@ -451,10 +436,6 @@ function App() {
               )}
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="rounded-3xl border border-white/10 bg-white/5 px-5 py-4 text-slate-300 shadow-glow">
-                  <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">dica cósmica</p>
-                  <p className="mt-2 text-sm text-white">o lugar certo sempre brilha mais quando a companhia é especial.</p>
-                </div>
                 <button
                   onClick={() => setScreen(4)}
                   className="glow-btn min-w-[170px] bg-gradient-to-r from-fuchsia-400/20 to-violet-500/10 text-white"
@@ -468,9 +449,8 @@ function App() {
           {screen === 4 && (
             <motion.section key="screen-4" {...screenMotion} className="mx-auto flex max-w-4xl flex-col gap-8 rounded-[32px] border border-white/10 bg-slate-950/70 px-8 py-16 shadow-glow backdrop-blur-xl sm:px-10">
               <div className="space-y-3 text-center">
-                <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">resumo do encontro</p>
+                <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">resumo</p>
                 <h2 className="text-4xl font-semibold text-white">você tem certeza disso?</h2>
-                <p className="text-slate-300">revise com calma e sinta que esse convite foi feito para alguém especial.</p>
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 text-center">
@@ -529,7 +509,7 @@ function App() {
                 </div>
                 <div className="mt-10 flex items-center justify-center gap-3 text-slate-300">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 text-cyan-200">✓</span>
-                  <span className="text-sm">check animado para a nossa missão especial.</span>
+                  <span className="text-sm">check nada funcional apenas para cobrir espaço.</span>
                 </div>
               </div>
               <p className="max-w-3xl text-center text-sm leading-6 text-slate-400">
