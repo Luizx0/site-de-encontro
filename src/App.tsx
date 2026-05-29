@@ -338,17 +338,15 @@ function App() {
                 </h1>
               </div>
 
-              <div className="relative flex w-full max-w-4xl items-center justify-center px-6 py-10">
-                <motion.button
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleYesClick}
-                  ref={yesButtonRef}
-                  className="glow-btn z-10 min-w-[150px] px-8 py-4 text-lg bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
-                >
-                  SIM
-                </motion.button>
-              </div>
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleYesClick}
+                ref={yesButtonRef}
+                className="glow-btn z-10 min-w-[150px] px-8 py-4 text-lg bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
+              >
+                SIM
+              </motion.button>
 
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -370,14 +368,14 @@ function App() {
                 <img
                   src={easterEggImages.star}
                   alt="estrela interestelar"
-                  className="pointer-events-none absolute left-8 top-16 h-16 w-16 animate-pulse opacity-90"
+                  className="pointer-events-none absolute left-8 top-16 h-20 w-20 animate-pulse opacity-90"
                 />
               )}
               {easterEggImages.lightsaber && (
                 <img
                   src={easterEggImages.lightsaber}
                   alt="sabre de luz"
-                  className="pointer-events-none absolute right-8 top-16 h-18 w-8 opacity-90"
+                  className="pointer-events-none absolute right-8 top-16 h-20 w-12 opacity-90"
                 />
               )}
               {easterEggImages.moonwalk && (
