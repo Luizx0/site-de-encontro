@@ -164,12 +164,12 @@ function App() {
     });
 
     setNoPos({
-      x: `${clamp(Math.random() * 84 + 7, 7, 88)}%`,
-      y: `${clamp(Math.random() * 80 + 7, 7, 87)}%`
+      x: `${clamp(Math.random() * 90 + 5, 5, 95)}%`,
+      y: `${clamp(Math.random() * 90 + 5, 5, 95)}%`
     });
     window.setTimeout(() => {
       moveCooldown.current = false;
-    }, 240);
+    }, 180);
   };
 
   const handleYesClick = () => {
@@ -261,7 +261,7 @@ function App() {
                 const bx = btnRect.left - rect.left + btnRect.width / 2;
                 const by = btnRect.top - rect.top + btnRect.height / 2;
                 const dist = Math.hypot(mx - bx, my - by);
-                if (dist < 60) {
+                if (dist < 120) {
                   handleNoMove();
                 }
               }}
@@ -277,12 +277,12 @@ function App() {
                 </h1>
               </div>
 
-              <div className="relative flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+              <div className="relative flex h-[260px] w-full max-w-4xl items-center justify-center rounded-[36px] border border-white/10 bg-slate-950/60 px-6 py-8 shadow-glow">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleYesClick}
-                  className="glow-btn bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white shadow-glow"
+                  className="glow-btn z-10 bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
                 >
                   SIM
                 </motion.button>
@@ -294,7 +294,7 @@ function App() {
                   transition={{ type: 'spring', stiffness: 140, damping: 16 }}
                   ref={buttonRef}
                   onClick={handleNoMove}
-                  className="glow-btn absolute z-10 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
+                  className="glow-btn absolute z-20 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
                   style={{ left: noPos.x, top: noPos.y }}
                 >
                   NÃO
