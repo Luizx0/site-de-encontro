@@ -5,7 +5,7 @@ type LocationOption = {
   id: string;
   title: string;
   subtitle: string;
-  theme: 'space' | 'park' | 'surprise' | 'custom';
+  theme: 'movie' | 'park' | 'surprise' | 'custom';
 };
 
 const locationOptions: LocationOption[] = [
@@ -13,7 +13,7 @@ const locationOptions: LocationOption[] = [
     id: 'cine',
     title: 'Cine Drive-In',
     subtitle: 'literalmente pra assistir o mandaloriano e o Grogu',
-    theme: 'space'
+    theme: 'movie'
   },
   {
     id: 'parque',
@@ -75,7 +75,7 @@ function App() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('20:30');
   const [location, setLocation] = useState('cine');
-  const [customLocation, setCustomLocation] = useState('um passeio sem pressa');
+  const [customLocation, setCustomLocation] = useState('No que pensas?');
   const [audioActive, setAudioActive] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -405,7 +405,6 @@ function App() {
           {screen === 2 && (
             <motion.section key="screen-2" {...screenMotion} className="mx-auto flex max-w-4xl flex-col gap-8 rounded-[32px] border border-white/10 bg-slate-950/70 px-8 py-16 shadow-glow backdrop-blur-xl sm:px-10">
               <div className="space-y-3 text-center">
-                <p className="text-sm uppercase tracking-[0.35em] text-cyan-200/70">nenhuma chance de não responder</p>
                 <h2 className="text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">NO WAY</h2>
                 <p className="text-3xl font-medium text-slate-100">NO WAY, SÉRIO???</p>
               </div>
@@ -458,7 +457,7 @@ function App() {
                       }`}
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <span className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">{option.theme === 'custom' ? 'personalizado' : option.title}</span>
+                        <span className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">{option.theme === 'custom' ? 'choice' : option.title}</span>
                         <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-slate-200">
                           {option.theme}
                         </span>
