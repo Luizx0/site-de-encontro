@@ -333,9 +333,9 @@ function App() {
               </div>
 
               <div className="flex flex-col items-center gap-4 text-center">
-                <h1 className="max-w-3xl text-[clamp(2.75rem,5vw,5.5rem)] leading-[0.95] text-white drop-shadow-[0_0_20px_rgba(128,216,255,0.32)]">
+                <h2 className="max-w-3xl text-[clamp(2.75rem,5vw,5.5rem)] leading-[0.95] text-white drop-shadow-[0_0_20px_rgba(128,216,255,0.32)]">
                   Você aceita sair comigo??
-                </h1>
+                </h2>
               </div>
 
               <motion.button
