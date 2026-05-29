@@ -468,7 +468,7 @@ function App() {
                       </div>
                       <div
                         className={`pointer-events-none absolute right-6 top-6 h-12 w-12 rounded-full ${
-                          option.theme === 'space'
+                          option.theme === 'movie'
                             ? 'bg-gradient-to-br from-cyan-300/20 to-blue-500/15'
                             : option.theme === 'park'
                             ? 'bg-emerald-400/10'
