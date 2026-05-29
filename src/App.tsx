@@ -338,13 +338,13 @@ function App() {
                 </h1>
               </div>
 
-              <div className="relative flex h-[260px] w-full max-w-4xl items-center justify-center rounded-[36px] border border-white/10 bg-slate-950/60 px-6 py-8 shadow-glow">
+              <div className="relative flex w-full max-w-4xl items-center justify-center px-6 py-10">
                 <motion.button
-                  whileHover={{ scale: 1.03 }}
+                  whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleYesClick}
                   ref={yesButtonRef}
-                  className="glow-btn z-10 bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
+                  className="glow-btn z-10 min-w-[150px] px-8 py-4 text-lg bg-gradient-to-r from-cyan-400/20 to-blue-400/10 text-white"
                 >
                   SIM
                 </motion.button>
@@ -357,7 +357,7 @@ function App() {
                 transition={{ type: 'spring', stiffness: 140, damping: 16 }}
                 ref={buttonRef}
                 onClick={handleNoMove}
-                className="glow-btn absolute z-20 min-w-[110px] bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
+                className="glow-btn absolute z-20 min-w-[140px] px-8 py-4 text-lg bg-slate-900/90 text-slate-100 shadow-[0_0_45px_rgba(224,100,255,0.16)] hover:bg-slate-800/95"
                 style={{ left: noPos.x, top: noPos.y }}
               >
                 NÃO
@@ -370,14 +370,14 @@ function App() {
                 <img
                   src={easterEggImages.star}
                   alt="estrela interestelar"
-                  className="pointer-events-none absolute left-8 top-16 h-12 w-12 animate-pulse opacity-90"
+                  className="pointer-events-none absolute left-8 top-16 h-16 w-16 animate-pulse opacity-90"
                 />
               )}
               {easterEggImages.lightsaber && (
                 <img
                   src={easterEggImages.lightsaber}
                   alt="sabre de luz"
-                  className="pointer-events-none absolute right-8 top-16 h-16 w-6 opacity-90"
+                  className="pointer-events-none absolute right-8 top-16 h-18 w-8 opacity-90"
                 />
               )}
               {easterEggImages.moonwalk && (
